@@ -1,0 +1,35 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #fdfdfd;
+  margin: 0;
+  padding: 0;
+}
+
+header, footer {
+  background-color: #333;
+  color: white;
+  padding: 1rem;
+}
+
+nav a {
+  color: white;
+  margin-right: 1rem;
+  text-decoration: none;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+main {
+  padding: 2rem;
+}
+
+img.responsive {
+  max-width: 100%;
+  height: auto;
+}
+
+ul {
+  list-style-type: square;
+}
