@@ -23,7 +23,9 @@ When we make an asynchronous request, we'll be working with objects called [Prom
 
 To make an asyncronous HTTP request, we can either use vanilla JavaScript, or third-party packages like d3, jQuery, or axios.
 
-> NOTE: let's prefer to use the Vanilla JavaScript `fetch()` method if possible, unless we're already using one of the other packages in our project, to avoid unnecessary dependencies.
+> NOTE: let's prefer to use the vanilla JavaScript `fetch()` method if possible, unless we're already using one of the other packages in our project, to avoid unnecessary dependencies.
+
+> UPDATE: for beginners, it might be a lot easier to use the `d3` package than Vanilla JavaScript, and you might find this dependency is worth it.
 
 ### Vanilla JavaScript
 
@@ -89,20 +91,37 @@ fetch(requestUrl, requestOptions)
   })
 ````
 
+As you can see, these methods are a bit verbose, so it might be easier to use a library like `d3` instead.
+
 ### D3
 
 References:
 
-  + [`d3.request()`](https://github.com/d3/d3-request/blob/master/README.md#api-reference).
-  + [`d3.json()`](https://github.com/d3/d3-request/blob/master/README.md#json)
+  + [`d3-fetch`](https://d3js.org/d3-fetch)
+  + [`d3.json()`](https://d3js.org/d3-fetch#json)
+  + [`d3.csv()`](https://d3js.org/d3-fetch#csv)
 
-Issuing GET requests with D3:
+We can use the `d3-fetch` sub-library of [`d3`](./packages/d3.md) to fetch data. When fetching JSON formatted data, we use `d3.json()`. When fetching CSV formatted data, we use `d3.csv()`.
+
+
+Issuing GET requests with D3 (for JSON and CSV data, respectively):
 
 ```` js
-var requestUrl = "https://raw.githubusercontent.com/prof-rossetti/internet-technologies/main/exercises/fetch-the-data/gradebook.json"
+// FETCHING JSON DATA
+var requestUrl = "https://raw.githubusercontent.com/prof-rossetti/intro-to-python/refs/heads/main/data/gradebook.json"
 
-d3.json(requestUrl, function(json){
-  console.log("GOT SOME DATA:", json)
+d3.json(requestUrl, function(data){
+  console.log("GOT SOME DATA:", data)
+  // DO SOMETHING WITH THE DATA HERE!
+})
+````
+
+```` js
+// FETCHING CSV DATA
+var requestUrl = "https://raw.githubusercontent.com/prof-rossetti/intro-to-python/refs/heads/main/data/gradebook.csv"
+
+d3.csv(requestUrl, function(data){
+  console.log("GOT SOME DATA:", data)
   // DO SOMETHING WITH THE DATA HERE!
 })
 ````
@@ -110,23 +129,34 @@ d3.json(requestUrl, function(json){
 Issuing POST requests with D3:
 
 ```` js
-var requestUrl = "https://example.com/api/robots"
-var formData = {name: "New Bot", description: "Does all the things."}
+var requestUrl = "https://httpbin.org/post"
+var formData = {
+  name: "Waldo Ma",
+  email: "waldo@example.com",
+  age: 75
+}
+var requestOptions = {
+  method: "POST", 
+  headers: {"Content-Type": "application/json"},
+  body: JSON.stringify(formData)
+}
 
-d3.request(requestUrl)
-  .header("Accept", "application/json")
-  .header("Content-Type", "application/json")
-  .on("error", function(error) {
-    // HANDLE ERRORS HERE
-  })
-  .on("load", function(xhr) {
-    // HANDLE RESPONSE HERE
-  })
-  .send("POST", JSON.stringify(formData))
+d3.json(requestUrl, requestOptions)
+.then(response => {
+  console.log("SUCCESS:", response)
+  // DO SOMETHING WITH THE RESPONSE HERE!
+
+})
+.catch(error => {
+  console.error("ERROR:", error)
+})
 ````
 
+<hr>
 
 ### JQuery
+
+> 2025 NOTE: we don't really use JQuery anymore.
 
 References:
 
@@ -204,8 +234,8 @@ var requestOptions = {
         Authorization: `Bearer ${API_KEY}`,
     },
     params: {
-      location: "Washington, DC", // todo: use form data
-      price: 3 // todo: use form data
+      location: "Washington, DC", 
+      price: 3 
     }
 }
 console.log("REQUEST OPTIONS:", requestOptions)

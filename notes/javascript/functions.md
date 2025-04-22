@@ -72,11 +72,41 @@ displayHeight(6, 3)
 When your function has multiple parameters, the order matters. You need to pass in values consistent with the order the parameters were defined.
 
 
-## Returns
+## Default Parameters
+
+Reference https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Default_parameters
+
+It is possible to specify default parameter values that should be used if the parameter is omitted during invocation:
+
+
+```js
+function motivate(name="everyone"){
+  console.log("ROW FASTER,", name.toUpperCase())
+}
+
+
+motivate() // USES DEFAULT PARAMETER
+//> "ROW FASTER, EVERYONE"
+
+motivate("Cam")
+//> "ROW FASTER, CAM"
+
+motivate("Ben")
+//> "ROW FASTER, BEN"
+
+motivate("Grant")
+//> "ROW FASTER, GRANT"
+
+motivate("Michael")
+//> "ROW FASTER, MICHAEL"
+```
+
+
+## Return Values
 
 By default, functions can "do stuff". But they also have the ability to "return stuff".
 
-We use the `return` keyword to pass back a value to the function's caller. This allows us to store the return value in a variable for later use.
+We use the `return` keyword to pass back a value to the function's caller. This allows us to store the returned value in a variable for later use.
 
 In this example below, because we forgot to return a value, we can't make use of the calculated value later:
 
@@ -99,6 +129,15 @@ function calculateArea(length, height){
 var area = calculateArea(4, 2)
 area //> 8
 ````
+
+## Scope
+
+It is important to understand variable scope when working with functions. See the [JavaScript Scope](https://www.w3schools.com/js/js_scope.asp) notes from W3Schools for more information and examples.
+
+
+
+<hr>
+
 
 # Arrow Functions
 
